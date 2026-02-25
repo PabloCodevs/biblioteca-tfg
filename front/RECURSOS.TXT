@@ -1,0 +1,1816 @@
+2º CFGS DESARROLLO DE
+APLICACIONES WEB
+PROGRAMACIÓN DE
+APLICACIONES USANDO
+FRAMEWORKS
+VUE.JS
+Luis Vicente Viñas
+01-Instalación de un nuevo proyecto con Vue
+1. Crear una carpeta para alojar todos los proyectos vue (Vue3)
+2. Ir a la ruta de la carpeta, ejecutar npm create vite y seguir los pasos:
+npm create vite
+> npx
+> > create-vite
+◆ Project name:
+codersfree█
+◆ Select a framework: ○ Vanilla
+● Vue
+○ React
+○ Preact
+○ Lit
+○ Svelte
+○ Solid
+○ Qwik
+○ Angular
+○ Marko
+○
+Others
+Select a variant:
+○ TypeScript
+○ JavaScript
+● Official Vue Starter ↗ (npm create vue@latest)
+○ Nuxt ↗
+◆ Use rolldown-vite (Experimental)?:
+○ Yes
+● No
+◆ Install with npm and start now?
+● Yes / ○ No
+> npx
+> create-vue codersfree
+Vue.js - The Progressive JavaScript Framework
+◆ Select features to include in your project: (↑/↓ to navigate, space to
+select, a to toggle all, enter to confirm)
+◼ TypeScript
+◻ JSX Support
+◻ Router (SPA development)
+◻ Pinia (state management)
+◻ Vitest (unit testing)
+◻ End-to-End Testing
+◻ ESLint (error prevention)
+◻ Prettier (code formatting)
+TypeScript
+◆ Select experimental features to include in your project: (↑/↓ to
+navigate, space to select, a to toggle all, enter to confirm)
+◻ Oxlint
+◻ rolldown-vite (experimental)
+◆ Skip all example code and start with a blank Vue project?
+○ Yes / ● No
+Scaffolding project in /home/lvicente/Development/Vue3/codersfree...│
+Done. Now run:
+cd codersfree
+npm install
+npm run dev
+Optional: Initialize Git in your project directory with:
+git init && git add -A && git commit -m "initial commit"
+└ ^5c08dc
+3. Ir a la carpeta del proyecto y ejecutar:
+```bash
+npm install
+npm run dev
+4. Ir a http://localhost:5173/
+02-Lo esencial
+1. Cómo se inicializa Vue
+Una vez hemos visto el proyecto funcionando, vamos a revisar cómo se inicializa Vue.
+1.1. El archivo index.html
+El archivo que se carga al inicio es el index.html; veamos su contenido:
+Las líneas más importantes, y que hay que entender son las que están dentro de la etiqueta
+body. Veamos primero el archivo main.ts:
+1.2. El archivo main.ts
+<!DOCTYPE html>
+<html lang="">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico">
+<meta name="viewport" content="width=device-width, initial-
+scale=1.0">
+<title>Vite App</title>
+</head>
+<body>
+<div id="app"></div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html
+En este archivo:
+1.3. El componente App.vue
+El componente App.vue es el encargado de cargar el contenido de la página principal
+(index.html). Veamos su contenido:
+import './assets/main.css'
+import { createApp } from 'vue'
+import App from './App.vue'
+createApp(App).mount('#app')
+1. Se carga la hoja de estilos global del proyecto.
+2. Se inicializa el freamework de Vue
+3. Se importa el componente App.vue.
+4. Se crea la aplicación y se monta el contenido en #app (en el div del body del fichero
+index.html).
+5. Se muestra el contenido del componente App.vue.
+<script setup lang="ts">
+import HelloWorld from './components/HelloWorld.vue'
+import TheWelcome from './components/TheWelcome.vue'
+</script>
+<template>
+<header>
+<img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125"
+height="125" />
+<div class="wrapper">
+<HelloWorld msg="You did it!" />
+</div>
+</header>
+<main>
+<TheWelcome />
+</main>
+</template>
+<style scoped>
+header {
+line-height: 1.5;
+}
+.logo {
+Nota
+De las 3 secciones explicadas, la sección template es la única obligatoria ¿Porqué creéis?
+1.4. Creación de Hola Mundo con Vue
+Una vez que hemos visto como se inicializa Vue, vamos a modificar el código para crear el típico
+hola Mundo. Para ello:
+display: block;
+margin: 0 auto 2rem;
+}
+@media (min-width: 1024px) {
+header {
+display: flex;
+place-items: center;
+padding-right: calc(var(--section-gap) / 2);
+}
+.logo {
+margin: 0 2rem 0 0;
+}
+header .wrapper {
+display: flex;
+place-items: flex-start;
+flex-wrap: wrap;
+}
+}
+</style>
+1. Editamos el contenido del componente App.vue y lo dejamos de la siguiente manera:
+<script setup lang="ts">
+</script>
+<template>
+<h1>Hola Mundo desde Vue!</h1>
+</template>
+<style scoped>
+</style>
+2. Borramos los componentes HelloWorld.vue, TheWelcome.vue y WelcomeItem.vue de la
+carpeta components sin eliminar la carpeta.
+3. Dejamos vacio el archivo main.css de la carpeta assets y eliminamos el archivo base.css.
+Nota
+Fijaros que Vite se encarga de renderizar la página sin tener que inicializarla después de cada
+cambio realizado en el código.
+2. Composition Api vs Option Api
+Vue puede usar dos tipos de sintaxis:
+3. Sintaxis de plantilla
+La sintaxis de plantilla nos permite mostrar contenido dentro de nuestro template.
+Option Api: Es la sintaxis antigua, usada en versiones anteriores de Vue.
+Composition Api: Es la nueva sintaxis de Vue 3; es la que usaremos en este curso en su
+versión simplificada ya que hemos puesto dentro de la sección script , la palabra setup.
+Veamos la diferencia entre usar la palabra setup y no usarla:
+con setup sin setup
+Nota
+Con la palabra scoped dentro de la sección style indicamos que el estilo declarado se use
+sólo para el componente.
+<script setup lang="ts">
+const msg: string = 'Hola
+mundo';
+</script>
+<template>
+<h1>{{ msg }}</h1>
+</template>
+<script lang="ts">
+export default {
+setup() {
+const msg: string
+= 'Hola mundo';
+return {
+msg;
+}
+}
+}
+</script>
+<template>
+<h1>{{ msg }}</h1>
+</template>
+3.1. Interpolación de texto
+La forma más básica de vinculación de datos es la interpolación de texto mediante la sintaxis
+"Mustache" (doble llave):
+La etiqueta "mustache" se reemplazará con el valor de la propiedad "msg" de la instancia del
+componente correspondiente. También se actualizará cuando cambie la propiedad "msg".
+3.2. HTML Puro (Raw HTML)
+La sintaxis mustache interpreta los datos como texto plano, no como HTML. Para generar HTML
+real, deberemos usar v-html:
+Aquí nos encontramos con algo nuevo. El atributo v-html que se llama directiva. Las directivas
+tienen el prefijo v- para indicar que son atributos especiales proporcionados por Vue y, como
+habrás adivinado, aplican un comportamiento reactivo especial al DOM renderizado.
+Básicamente, decimos "mantener el HTML interno de este elemento actualizado con la
+propiedad msg de la instancia activa actual".
+Atención!!
+Representar dinámicamente HTML arbitrario en su sitio web puede ser muy peligroso, ya que
+puede provocar fácilmente vulnerabilidades XSS. Usa v-html solo en contenido confiable y
+nunca en contenido proporcionado por el usuario.
+3.3. Vincular atributos (v-bind)
+No podemos usar sintaxis mustache dentro de atributos HTML. En su lugar, utilice la directiva v-
+bind:
+<script setup lang="ts">
+const msg: string = 'Hola mundo';
+</script>
+<template>
+<h1>{{ msg }}</h1>
+</template>
+<script setup lang="ts">
+const msg: string = '<h1>Hola mundo</h1>';
+</script>
+<template>
+<div v-html="msg"</div>
+</template>
+La directiva v-bind indica a Vue que mantenga el atributo id del elemento sincronizado con la
+propiedad dynamicId del componente. Si el valor enlazado es nulo o indefinido, el atributo se
+eliminará del elemento renderizado.
+3.3.1. Método abreviado
+Dado que v-bind se usa con tanta frecuencia, cuenta con una sintaxis abreviada específica:
+Los atributos que empiezan por : pueden parecer un poco diferentes del HTML normal, pero es
+un carácter válido para nombres de atributo y todos los navegadores compatibles con Vue
+pueden analizarlo correctamente. Además, no aparecen en el marcado final. La sintaxis
+abreviada es opcional, pero es ampliamente usada.
+3.3.2. Abreviatura del mismo nombre
+Solo compatible con la versión 3.4 y posteriores
+Si el atributo tiene el mismo nombre que la variable del valor de JavaScript/TypeScript que se va
+a enlazar, la sintaxis se puede acortar aún más para omitir el valor del atributo:
+<script setup lang="ts">
+const redBackgroundClass: string = 'bgred';
+</script>
+<template>
+<p v-bind:class="redBackgroundClass">Hola mundo</div>
+</template>
+<style scoped>
+.bg-red {
+background-color: red;
+}
+</style>
+<script setup lang="ts">
+const redBackgroundClass: string = 'bgred';
+</script>
+<template>
+<p :class="redBackgroundClass">Hola mundo</p>
+</template>
+<style scoped>
+.bg-red {
+background-color: red;
+}
+</style>
+3.3.3. Atributos booleanos
+Los atributos booleanos son atributos que pueden indicar valores verdaderos o falsos mediante
+su presencia en un elemento. Por ejemplo, "disabled" es uno de los atributos booleanos más
+utilizados.
+3.4. Uso de expresiones JavaScript
+Hasta ahora, solo hemos enlazado claves de propiedad simples en nuestras plantillas. Sin
+embargo, Vue admite todo el potencial de las expresiones JavaScript en todos los enlaces de
+datos:
+<script setup lang="ts">
+const id: string = 'parrafo';
+</script>
+<template>
+<p :id>Hola mundo</p>
+</template>
+<style scoped>
+#parrafo {
+background-color: red;
+}
+</style>
+<script setup lang="ts">
+const isDisabled: boolean = true;
+</script>
+<template>
+<button :disabled="isDisabled">Botón</button>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+const isDisabled: boolean = true;
+</script>
+<template>
+<p>
+{{ isDisabled ? 'Deshabilitado' : 'Habilitado' }}
+</p>
+<button :disabled="isDisabled">Botón</button>
+</template>
+4. Conceptos de reactividad
+Veamos el siguiente código:
+El código propuesto debería incrementar el valor de la variable count al pulsar el botón + y
+decrementarla al pulsar el botón -, pero no funciona. Para que esto funcione debemos declarar
+la variable como reactiva.
+Nota
+4.1. Uso de ref para crear objetos reactivos
+Vamos a modificar el código anterior para usar un objeto reactivo en vez de la variable:
+<style scoped>
+</style>
+<script setup lang="ts">
+let count: number = 0;
+function increment() {
+count++;
+console.log( count );
+}
+function decrement() {
+count--;
+console.log( count );
+}
+</script>
+<template>
+<button @click="decrement"> - </button>
+<span>{{ count }}</span>
+<button @click="increment"> + </button>
+</template>
+<style scoped>
+span {
+padding: 0 10px;
+}
+</style>
+1. Veremos los eventos "@" más adelante.
+2. Si abrimos la consola del navegador vemos que la variable count si que cambia su valor al
+pulsar sobre los botones aunque no lo renderize.
+Vemos que con el uso del objeto ref, ahora el código hace lo que debería.
+Nota
+Notar que ref es un objeto que tiene propiedades; por eso, en el script, para modificar su
+valor, hay que hacer uso de la propiedad value .
+4.2. Uso de reactive para crear objetos reactivos.
+Si en vez de inicializar el objeto con un valor, queremos hacerlo con un objeto, usaremos
+reactive en vez de ref. Vue nos da esta posibilidad y es más cómodo.
+En el siguiente código vemos la diferencia del uso de ref y reactive a la hora de trabajar con
+objetos en javascript.
+con ref con reactive
+<script setup lang="ts">
+import { ref } from 'vue';
+const count = ref(0);
+function increment() {
+count.value++;
+}
+function decrement() {
+count.value--;
+}
+</script>
+<template>
+<button @click="decrement"> - </button>
+<span>{{ count }}</span>
+<button @click="increment"> + </button>
+</template>
+<style scoped>
+span {
+padding: 0 10px;
+}
+</style>
+<script setup lang="ts">
+import { ref } from 'vue';
+const user = ref({
+<script setup lang="ts">
+import { reactive } from 'vue';
+const user = reactive({
+5. Propiedades calculadas
+Vamos a modificar el código anterior para que el código nos diga si la persona es mayor de edad
+o menor de edad:
+name: 'Luis',
+surname: 'Vicente',
+age: 49
+});
+function increment() {
+user.value.age++;
+}
+function decrement() {
+user.value.age--;
+}
+</script>
+<template>
+<button @click="decrement"> -
+</button>
+<span>{{ user.age }}</span>
+<button @click="increment"> +
+</button>
+</template>
+<style scoped>
+span {
+padding: 0 10px;
+}
+</style>
+name: 'Luis',
+surname: 'Vicente',
+age: 49
+});
+function increment() {
+user.age++;
+}
+function decrement() {
+user.age--;
+}
+</script>
+<template>
+<button @click="decrement"> -
+</button>
+<span>{{ user.age }}</span>
+<button @click="increment"> +
+</button>
+</template>
+<style scoped>
+span {
+padding: 0 10px;
+}
+</style>
+<script setup lang="ts">
+import { reactive, computed } from 'vue';
+const user = reactive({
+name: 'Luis',
+surname: 'Vicente',
+age: 49
+});
+const status = computed(()=>{
+return user.age >= 18 ? 'Eres mayor de edad' : 'Eres menor de
+edad';
+});
+function increment() {
+user.age++;
+}
+function decrement() {
+user.age--;
+}
+</script>
+<template>
+Las propiedades calculadas permiten que cuando cambia alguno de sus valores, se recalculan y
+renderizan la respuesta. Además su resultado se almacena en caché por lo que si la propiedad
+no se modifica, sólo la usa una vez con independencia de que en el código se utilice varias
+veces.
+Nota
+Este es un caso muy simple y no seria necesario el uso de propiedades calculadas, pero para
+casos más complejos, no usarlas llevaría a code smell
+6. Vinculaciones de clase y estilo
+Para estudiar este apartado vamos a crear un código que pinte de rojo el fondo texto Hola
+mundo! cuando se pulse un botón y que si se vuelve a pulsar lo deje blanco:
+En este código usamos una variable booleana para aplicar una clase o eliminarla. Otra forma de
+hacerlo sería trabajar con operadores ternarios; se suele usar cuando aplicamos varias clases .
+Veamos el siguiente código:
+<button @click="decrement"> - </button>
+<span>{{ user.age }}</span>
+<p> {{ status }} </p>
+<button @click="increment"> + </button>
+</template>
+<style scoped>
+span {
+padding: 0 10px;
+}
+</style>
+<script setup lang="ts">
+import { ref } from 'vue';
+const paint = ref(false);
+</script>
+<template>
+<button @click="paint = !paint"> Pintar </button>
+<p :class="{
+'bg-red': paint,
+}"> Hola mundo!
+</p>
+</template>
+<style scoped>
+.bg-red {
+background-color: red;
+}
+</style>
+7. Representación condicional (v-if, v-else, v-else-if)
+Vue usa las directivas v-if, v-else y v-else-if para trabajar con condicionales. En el siguiente
+ejemplo vamos a crear un programa con 3 botones (A, B y C) de manera que se muestre por
+pantalla si hemos pulsado el botón A, B o C:
+<script setup lang="ts">
+import { ref } from 'vue';
+const paint = ref(false);
+</script>
+<template>
+<button @click="paint = !paint"> Pintar </button>
+<p :class="[
+paint ? 'bg-red' : 'bg-blue', 'text-white']"> Hola mundo!
+</p>
+</template>
+<style scoped>
+.bg-red {
+background-color: red;
+}
+.bg-blue {
+background-color: blue;
+}
+.text-white {
+color: white;
+}
+</style>
+<script setup lang="ts">
+import { ref } from 'vue';
+const type = ref('A');
+</script>
+<template>
+<button @click="type = 'A'"> A </button>
+<button @click="type = 'B'"> B </button>
+<button @click="type = 'C'"> C </button>
+<p v-if="type === 'A'">
+Se ha pulsado el botón A
+</p>
+<p v-else-if="type === 'B'">
+Se ha pulsado el botón B
+</p>
+<p v-else>
+Se ha pulsado el botón C
+</p>
+</template>
+Obviamente, no es la mejor forma de resolver el problema, pero es válido para explicar el uso de
+la representación de condicionales en vue.js.
+Nota
+En vue.js también existe la directiva v-show que permite mostrar y ocultar elementos. La
+diferencia es que el elemento siempre existirá y lo ocultará mediante css.
+8. Representación de listas (v-for)
+Podemos usar la directiva v-for para representar una lista de elementos a partir de un array.
+Esta directiva requiere una sintaxis especial: "item in items", donde "items" es el array de datos
+de origen y "item" es un alias del elemento del array que se itera:
+La directiva v-for también nos permite recuperar el índice:
+<style scoped>
+</style>
+<script setup lang="ts">
+const users: string[] = [
+'Jonh Doe',
+'Jane Smith',
+'Alice Johnson',
+'Bob Brown',
+'Charlie Black'
+];
+</script>
+<template>
+<ul>
+<li v-for="user in users">
+{{ user }}
+</li>
+</ul>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+const users: string[] = [
+'Jonh Doe',
+'Jane Smith',
+'Alice Johnson',
+'Bob Brown',
+'Charlie Black'
+];
+</script>
+En el siguiente código vamos a usar la directiva v-for con un objeto:
+Nota
+<template>
+<ul>
+<li v-for="(user, index) in users">
+{{ index }} - {{ user }}
+</li>
+</ul>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+const users: { id: number; name: string }[] = [
+{
+'id': 1,
+'name': 'Jonh Doe'
+},
+{
+'id': 2,
+'name': 'Jane Smith'
+},
+{
+'id': 3,
+'name': 'Alice Johnson'
+},
+{
+'id': 4,
+'name': 'Bob Brown'
+},
+{
+'id': 5,
+'name': 'Charlie Black'
+},
+];
+</script>
+<template>
+<ul>
+<li v-for="({id, name}, index) in users">
+{{ id }} - {{ name }} ({{ index }})
+</li>
+</ul>
+</template>
+<style scoped>
+</style>
+Observar que hemos aplicado desestructuración en el objeto users.
+8.1 Uso de v-for con v-if
+Podemos combinar ambas sentencias para recuperar, por ejemplo, los usuarios cuyo id sea
+mayor que 2:
+Si el array, en vez de ser una constante (const), fuese una variable (let) sería necesario agregar
+la directiva :key a fin de que vue pudiese renderizar correctamente el contenido cuando la
+variable cambie:
+<script setup lang="ts">
+const users: { id: number; name: string }[] = [
+{
+'id': 1,
+'name': 'Jonh Doe'
+},
+{
+'id': 2,
+'name': 'Jane Smith'
+},
+{
+'id': 3,
+'name': 'Alice Johnson'
+},
+{
+'id': 4,
+'name': 'Bob Brown'
+},
+{
+'id': 5,
+'name': 'Charlie Black'
+},
+];
+</script>
+<template>
+<ul>
+<template v-for="(user, index) in users">
+<li v-if="user.id > 2">
+{{ user.id }} - {{ user.name }} ({{ index }})
+</li>
+</template>
+</ul>
+</template>
+<style scoped>
+</style>
+9. Manejo de eventos
+En los ejemplos anteriores hemos hecho uso del evento click (@click ->forma abreviada de v-
+on:click). Es el momento de profundizar un poco más en ellos.
+9.1. Escucha de eventos
+Podemos usar la directiva v-on, que normalmente abreviamos con el símbolo @, para escuchar
+eventos DOM y ejecutar JavaScript cuando se activan. El uso sería v-on:click="handler" o, con la
+abreviatura, @click="handler".
+El valor del controlador puede ser uno de los siguientes:
+9.1.1. Controladores en línea
+Los controladores en línea se usan para casos simples:
+9.1.2. Controladores de método
+Sin embargo, la lógica de muchos controladores de eventos será más compleja y probablemente
+no sea viable con controladores en línea. Por eso, v-on también puede aceptar el nombre o la
+ruta de un método de componente al que se desee llamar. Por ejemplo:
+<template v-for="(user, index) in users">
+<li v-if="user.id > 2": key="user.id">
+{{ user.id }} - {{ user.name }} ({{ index }})
+</li>
+</template>
+1. Controladores en línea: JavaScript en línea que se ejecuta cuando se activa el evento
+(similar al atributo nativo onclick).
+2. Controladores de método: Un nombre de propiedad o ruta que apunta a un método definido
+en el componente.
+<script setup lang="ts">
+import { ref } from 'vue';
+count = ref(0);
+</script>
+<template>
+<button @click="count++">Add 1</button>
+<p>Count is: {{ count }}</p>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+import { ref } from 'vue';
+count = ref(0);
+</script>
+<template>
+<button @click="count++">Add 1</button>
+<p>Count is: {{ count }}</p>
+</template>
+<style scoped>
+</style>
+03-Componentes
+Hasta ahora, hemos trabajado sólo en un componente pero, cuando hacemos aplicaciones, es
+necesario crear y trabajar con más componentes. En este capítulo crearemos componentes.
+3.1. Creación de componentes
+Para crear un componente nos dirigimos a la carpeta src > components. Los componentes se
+nombran en formato PascalCase según las recomendaciones de vue y con 2 palabras. La
+estructura de un componente tiene los apartados y tal y como aparece en la figura:
+A continuación se muestra el código del componente MyComponent.vue creado en la carpeta
+src > components.
+Ahora, para usar el componente desde App.vue tenemos que importarlo y llamarlo. Veamos
+como quedaría el código de App,vue:
+<script setup lang="ts">
+</script>
+<template>
+<h1>Hola Mundo desde el componente</h1>
+</template>
+<style scoped>
+</style>
+La salida en nuestro navegador es la mostrada el la siguiente figura:
+Nota
+Podríamos haber llamado al componente con otro nombre, siempre y cuando lo importemos
+desde la ruta correcta:
+Este componente lo hemos registrado de forma local y es la forma más habitual de registrar
+componentes en Vue. Si un componente lo usásemos en múltiples sitos, podríamos registrarlo
+de forma global. Para registrar un componente de forma global, lo importamos en el archivo
+main.ts:
+<script setup lang="ts">
+import MyComponent from './components/MyComponent.vue';
+</script>
+<template>
+<MyComponent />
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+import MyComponent2 from './components/MyComponent.vue';
+</script>
+<template>
+<MyComponent2></MyComponent2>
+</template>
+<style scoped>
+</style>
+import './assets/main.css'
+import { createApp } from 'vue'
+import App from './App.vue'
+import MyComponent from './components/MyComponent.vue'
+Y el código del archivo App.vue sería:
+El resultado en el navegador sería el mismo.
+Los componentes son una isla (lo que le pasa a uno no le pasa a otro).
+Ejercicio
+3.2. Props
+Props permite pasar datos entre componentes para personalizarlos. Imaginemos que estamos
+creando una academia de cursos online y queremos mosrtar las características de los cursos;
+para hacerlo, necesitaríamos crear un componente y pasar las características de cada curso
+(por ejemplo el nombre del curso, el nombre del profesor y el precio del curso).
+Creamos un nuevo componente DetailCourse.vue en la carpeta src > components y añadimos
+su estructura:
+createApp(App)
+.component('MyComponent', MyComponent)
+.mount('#app')
+<script setup lang="ts">
+</script>
+<template>
+<MyComponent />
+</template>
+<style scoped>
+</style>
+1. Modificar el contenido del componente MyComponent poniendo el código del contador
+visto en la sección anterior.
+2. Importar el componente en el archivo App.vue y llamarlo 4 veces.
+3. Comprobar su funcionamiento:
+<script setup lang="ts">
+interface course {
+id: number;
+name: string;
+Ahora modificamos el fichero App.vue:
+author: string;
+price: number;
+}
+const props = defineProps<{
+course: course;
+index: number;
+}>();
+console.log('Course:', props.course);
+</script>
+<template>
+<div>
+{{ index + 1 }} - {{ course.name }} by {{ course.author }} - ${{
+course.price }}
+</div>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+import DetailCourse from './components/DetailCourse.vue';
+interface course {
+id: number;
+name: string;
+author: string;
+price: number;
+}
+const courses: course[] = [
+{
+'id': 1,
+'name': 'Vue 3 + TypeScript',
+'author': 'Luis Vicente',
+'price': 39.99,
+},
+{
+'id': 2,
+'name': 'Angular + TypeScript',
+'author': 'Luis Vicente',
+'price': 29.99,
+},
+{
+'id': 3,
+'name': 'React + TypeScript',
+Nota
+poniendo
+Al llamarse igual los atributos que las variables.
+2. Podríamos desectructurar las variables para evitar llamar con props:
+const {course, index} = defineProps<{
+course: course;
+'author': 'Luis Vicente',
+'price': 19.99,
+},
+{
+'id': 4,
+'name': 'JavaScript Moderno',
+'author': 'Luis Vicente',
+'price': 9.99,
+},
+{
+'id': 5,
+'name': 'Node.js + TypeScript',
+'author': 'Luis Vicente',
+'price': 49.99,
+},
+];
+</script>
+<template>
+<ul>
+<template v-for="(course, index) in courses" :key="course.id">
+<li>
+<DetailCourse :course="course" :index="index" />
+</li>
+</template>
+</ul>
+</template>
+<style scoped>
+</style>
+1. Podríamos haber simplificado la línea
+<DetailCourse :course="course" :index="index" />
+<DetailCourse :course :index />
+index: number;
+}>();
+El resultado sería:
+Props permite pasar propiedades de componentes padres a hijos y es unidireccional. Por
+ejemplo, si modificásemos con un atributo v-model una propiedad en el padre, automáticamente
+se modificaría en los hijos.
+Para enviar propiedades de hijos a padres se usan los eventos.
+3.2. Eventos
+¿Cómo podemos modificar una propiedad del componente padre desde el componente hijo? ->
+Mediante Eventos; vamos a verlo.
+3.2.1. Eventos en el template
+Para modificar la propiedad del componente padre desde el componente hijo, tenemos que
+lanzar un evento.
+Vamos a modificar el código anterior haciendo lo siguiente:
+En el componente hijo DetailCourse.vue:
+1. definimos un evento defineEmits(['incrementCount']);
+2. Añadimos la propiedad count, que posteriormente añadiremos en el componente padre.
+3. creamos un botón, y en el evento @click, emitimos el evento definido mediante la variable
+integrada de Vue $emit
+<script setup lang="ts">
+const emit = defineEmits(['incrementCount']);
+interface course {
+id: number;
+name: string;
+author: string;
+price: number;
+}
+const props = defineProps<{
+En el fichero App.vue, vamos a añadir una propiedad reactiva de tipo numérica llamada count
+que pasaremos al componente hijo y que modificaremos mediante un input con la directiva v-
+model que veremos posteriormente y a la que añadimos el modificador number porque la
+variable count es de tipo number. Ademas pasamos la propiedad cpunt al componente hijo y
+mediante la directiva @ y poniendo el mismo nombre que hemos puesto en el
+componente hijo al evento nos quedamos a la escucha del evento y hacemos la acción que
+queramos (en este caso incrementamos el valor de la propiedad count):
+course: course;
+index: number;
+count: number;
+}>();
+console.log('Course:', props.course);
+</script>
+<template>
+<div>
+<h1>{{ course.name }}</h1>
+<h2>{{ course.author }}</h2> <h3>${{ course.price }}</h3>
+<p>Count: {{ count }}</p>
+</div>
+<button @click="emit('incrementCount')">Hazme Click</button>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+import { ref } from 'vue';
+import DetailCourse from './components/DetailCourse.vue';
+interface course {
+id: number;
+name: string;
+author: string;
+price: number;
+}
+const count = ref(0);
+const courses: course[] = [
+{
+'id': 1,
+'name': 'Vue 3 + TypeScript',
+'author': 'Luis Vicente',
+'price': 39.99,
+},
+{
+A la hora de emitir eventos, se pueden pasar parámetros. Siguiendo el ejemplo, vamos a pasar
+un parámetro para aumentar el contador de 2 en 2. A continuación se muestran las
+modificaciones realizadas en ambos componentes:
+DetailCourse.vue:
+App.vue:
+'id': 2,
+'name': 'Angular + TypeScript',
+'author': 'Luis Vicente',
+'price': 29.99,
+},
+{
+'id': 3,
+'name': 'React + TypeScript',
+'author': 'Luis Vicente',
+'price': 19.99,
+},
+{
+'id': 4,
+'name': 'JavaScript Moderno',
+'author': 'Luis Vicente',
+'price': 9.99,
+},
+{
+'id': 5,
+'name': 'Node.js + TypeScript',
+'author': 'Luis Vicente',
+'price': 49.99,
+},
+];
+</script>
+<template>
+<input type="text" v-model.number="count" />
+<template v-for="(course, index) in courses" :key="course.id">
+<DetailCourse
+:course="course"
+:index="index"
+:count="count"
+@incrementCount="count++" />
+</template>
+</template>
+<style scoped>
+</style>
+<button @click="$emit('incrementCount', 2)">Hazme Click</button>
+3.2.2 Eventos en el script
+A veces, no queremos emitir el evento en el componente hijo desde el template, sino que
+necesitamos hacerlo desde el script; por ejemplo si quisiésemos emitir un evento cada vez que
+guardamos un registro en la base de datos.
+La modificación en el componente hijo es muy simple; añadiríamos una función en el script y la
+llamaríamos desde el botón:
+<DetailCourse
+:course="course"
+:index="index"
+:count="count"
+@incrementCount="(increment)=>count+=increment"
+/>
+<script setup lang="ts">
+const emit = defineEmits(['incrementCount']);
+interface course {
+id: number;
+name: string;
+author: string;
+price: number;
+}
+const props = defineProps<{
+course: course;
+index: number;
+count: number;
+}>();
+function buttonClick() {
+emit('incrementCount', 2);
+}
+</script>
+<template>
+<div>
+<h1>{{ course.name }}</h1>
+<h2>{{ course.author }}</h2> <h3>${{ course.price }}</h3>
+<p>Count: {{ count }}</p>
+</div>
+<button @click="buttonClick">Hazme Click</button>
+</template>
+3.3. v-model
+En los casos, como es el ejemplo anterior, donde nos interese mantener enlazado una
+propiedad del componente padre con una propiedad del componente hijo, podemos usar la
+directiva v-model:
+Vamos a modificar el componente padre, eliminando el evento que escucha y la función a la que
+llama dicho evento. En su lugar vamos a usar la directiva v-model para pasar la propiedad count
+con el nombre count al componente hijo:
+App.vue:
+<style scoped>
+</style>
+<script setup lang="ts">
+import { ref } from 'vue';
+import DetailCourse from './components/DetailCourse.vue';
+interface course {
+id: number;
+name: string;
+author: string;
+price: number;
+}
+const count = ref(0);
+const courses: course[] = [
+{
+'id': 1,
+'name': 'Vue 3 + TypeScript',
+'author': 'Luis Vicente',
+'price': 39.99,
+},
+{
+'id': 2,
+'name': 'Angular + TypeScript',
+'author': 'Luis Vicente',
+'price': 29.99,
+},
+{
+'id': 3,
+'name': 'React + TypeScript',
+'author': 'Luis Vicente',
+'price': 19.99,
+},
+{
+'id': 4,
+'name': 'JavaScript Moderno',
+'author': 'Luis Vicente',
+Y el componente hijo definimos una constante count pasándole el método defineModel por lo
+que tendrá un enlace bidireccional que podrá ser modificada desde el componente padre y
+desde el componente hijo:
+'price': 9.99,
+},
+{
+'id': 5,
+'name': 'Node.js + TypeScript',
+'author': 'Luis Vicente',
+'price': 49.99,
+},
+];
+</script>
+<template>
+<input type="text" v-model.number="count" />
+<template v-for="(course, index) in courses" :key="course.id">
+<DetailCourse
+:course="course"
+:index="index"
+v-model:count="count"
+/>
+</template>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+interface course {
+id: number;
+name: string;
+author: string;
+price: number;
+}
+const count = defineModel<number>('count', { type: Number, required: true });
+const props = defineProps<{
+course: course;
+index: number;
+count: number;
+}>();
+function buttonClick() {
+count.value++;
+}
+</script>
+3.4. Componentes heredados
+Antes de hablar de componentes heredados vamos a instalar Tailwindcss para estilizar la
+aplicación. En estos momentos vamos a importarla desde el CDN y, posteriormente, la
+instalaremos en nuestra aplicación usando vite. Para instalarlo, vamos a la web de tailwind >
+Getting Started > Installation > Play CDN tal y como muestra la siguiente figura:
+Tenemos que importar la siguiente línea antes del cierre de la etiqueta head en nuestro
+archivo index.html
+Ahora sí, vamos a trabajar con componentes heredados. Para ello vamos a limpiar nuestro
+archivo App.vue y vamos a crear un nuevo componente en la carpeta de componentes llamado
+AlertComponent.vue. Posteriormente, hacemos uso del componente AlertComponent.vue en
+nuestro componente principal.
+App.vue
+<template>
+<div>
+<h1>{{ course.name }}</h1>
+<h2>{{ course.author }}</h2> <h3>${{ course.price }}</h3>
+<p>Count: {{ count }}</p>
+</div>
+<button @click="buttonClick">Hazme Click</button>
+</template>
+<style scoped>
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+AlertComponent.vue
+Si vemos el resultado en el navegador, podemos observar como el componente hijo ha
+heredado el atributo del componente padre:
+El componente hijo ha heredado el atributo dentro de la etiqueta
+raíz:
+Este es el comportamiento por defecto; si la etiqueta div del componente hijo ya tuviese una
+clase, la clase del componente padre se añadiría.
+AlertComponent.vue
+<script setup lang="ts">
+import AlertComponent from './components/AlertComponent.vue';
+</script>
+<template>
+<AlertComponent class="bg-red-600"/>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+</script>
+<template>
+<div>Hola Mundo</div>
+</template>
+<style scoped>
+</style>
+<div id="app" data-v-app=""><div class="bg-red-600">Hola Mundo</div></div>
+<script setup lang="ts">
+</script>
+<template>
+<div class="text-white">Hola Mundo</div>
+</template>
+<style scoped>
+</style>
+Ahora vamos a suponer que no queremos el comportamiento por defecto, es decir; que no
+queremos que la etiqueta
+reiz del componente padre sea el que la herede. Vamos a modificar el código del componente
+AlertComponent:
+AlertComponent
+Si revisamos las modificaciones realizadas en el componente:
+Este comportamiento funcionaría no solo para el atributo class, también para style, id, etc.
+Para hacer un segundo ejemplo e irnos familiarizando con tailwind.css vamos a crear alertas.
+Para ello vamos a buscar "alert tailwind" a fin de conocer las clases a aplicar y vamos a
+<div id="app" data-v-app=""><div class="text-white bg-red-600">Hola
+Mundo</div><div id="app" data-v-app=""><div class="text-white bg-red-600">Hola
+Mundo</div></div></div>
+<script setup lang="ts">
+defineOptions({
+inheritAttrs: false,
+});
+</script>
+<template>
+<div class="text-white">
+<div v-bind="$attrs">Hola Mundo</div>
+</div>
+</template>
+<style scoped>
+</style>
+1. Hemos añadido dentro del script el método defineOptions indicando que no herede los
+atributos.
+2. Hemos enlazado en la etiqueta div que nos ha interesado mediante la directiva v-bind a la
+variable $attrs para que añada en la etiqueta los atributos inyectados por el componente
+padre.
+Aunque el resultado visual es el mismo, si nos fijamos en el código html generado, podemos
+ver los cambios:
+<div id="app" data-v-app=""><div class="text-white"><div class="bg-red-
+600">Hola Mundo</div></div></div>
+modificar el código de los componentes para modificar los tipos de alertas en tailwind (info,
+danger, success, warning y dark):
+AlertComponent
+Eliminamos el contenido del script para que, si añadimos atributos de clase en el componente
+principal, el componente hijo las herede.
+Nota
+const alertColor = {...}[props.type] || 'text-blue-800 bg-blue-50'; // funciona como un switch
+App.vue
+<script setup lang="ts">
+const props = defineProps<{
+type: string,
+}>();
+const alertColor = {
+info: 'text-blue-800 bg-blue-50',
+danger: 'text-red-800 bg-red-50',
+success: 'text-green-800 bg-green-50',
+warning: 'text-yellow-800 bg-yellow-50',
+dark: 'text-gray-800 bg-gray-50',
+}[props.type] || 'text-blue-800 bg-blue-50';
+</script>
+<template>
+<div :class="alertColor" class="p-4 mb-4 text-sm rounded-lg"
+role="alert">
+<span class="font-medium">Info alert!</span>
+Change a few things up and try submitting again.
+</div>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+import AlertComponent from './components/AlertComponent.vue';
+</script>
+<template>
+<AlertComponent type="info"/>
+</template>
+Cambiando el type a danger, success, warning o dark veríamos como cambia el tipo de alerta.
+3.5. Slots
+La etiquete slot se situa en el componente hijo y sirve para mostrar la información contenida
+entre las etiquetas de apertura y cierre del componente padre (sin considerar los slots con
+nombre). Si el componente padre no tiene contenido entre sus etiquetas de apertura y cierre, en
+el componente hijo se puede poner contenido dentro de la etiqueta slot para que se muestre por
+defecto. Se puede definir más de un slot.
+Continuando con el ejercicio del punto anterior, vamos a hacer dinámico el texto "Change a few
+things up and try submitting again." del componente AlertComponent.
+App.vue
+Nota
+La forma corta de la directiva v-slot: es la #. Podríamos sustituir el contenido de v-slot:title por
+#title
+AlertComponent
+<style scoped>
+</style>
+<script setup lang="ts">
+import AlertComponent from './components/AlertComponent.vue';
+</script>
+<template>
+<AlertComponent :type="'danger'">
+<template v-slot:title>Danger alert!</template>
+Change a few things up and try submitting again.
+</AlertComponent>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+const props = defineProps<{
+type: string,
+}>();
+const alertColor = {
+info: 'text-blue-800 bg-blue-50',
+Como podemos ver, sólo si desde el componente padre enviamos un slot con nombre title, se
+mostrará la informacióon del slot title.
+3.6. Provide/Inject
+Hasta ahora hemos pasado propiedades desde componentes padre a componentes hijos y
+desde componentes hijos a componentes padre.
+Si necesitásemos pasar una propiedad desde un componente padre a un componente nieto, con
+lo que sabemos hasta ahora, se nos podría ocurrir pasar la propiedad al componente hijo (uso
+de props) y desde el componente hijo, volver a pasar la propiedad al componente nieto
+(nuevamente mediante props); pero si tuviésemos que pasarla a un componente biznieto o
+tataranieto tendríamos que seguir usando props por todos los componentes que desciendan del
+padre, lo cual no es muy eficiente. Hay otra forma mejor de hacerlo: mediante el uso de provide
+y de inject:
+Para ver su uso, vamos a partir de un componente padre (App.vue) limpio y vamos a crear 3
+componentes nuevos dentro de la carpeta components: OneComponent.vue,
+TwoComponent.vue y ThreeComponent.vue.
+App.vue
+danger: 'text-red-800 bg-red-50',
+success: 'text-green-800 bg-green-50',
+warning: 'text-yellow-800 bg-yellow-50',
+dark: 'text-gray-800 bg-gray-50',
+}[props.type] || 'text-blue-800 bg-blue-50';
+</script>
+<template>
+<div :class="alertColor" class="p-4 mb-4 text-sm rounded-lg"
+role="alert">
+<span class="font-medium" v-if="$slots.title">
+<slot name="title">Info alert!</slot>
+</span>
+Change a few things up and try submitting again.
+</div>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+import OneComponent from './components/OneComponent.vue';
+</script>
+OneComponent.vue
+TwoComponent.vue
+ThreeComponent.vue
+<template>
+<OneComponent />
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+import TwoComponent from './TwoComponent.vue';
+</script>
+<template>
+<div class="bg-red-500 p-8">
+<p class="text-white text-2xl">
+Hola desde el componente 1
+</p>
+<TwoComponent />
+</div>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+import ThreeComponent from './ThreeComponent.vue';
+</script>
+<template>
+<div class="bg-blue-500 p-8">
+<p class="text-white text-2xl">
+Hola desde el componente 2
+</p>
+<ThreeComponent />
+</div>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+</script>
+Siendo el resultado inicial el siguiente:
+Ahora, mediante el uso de provide y de inject vamos a modificar el componente 1 para pasar
+una propiedad al componente 3, y el componente 3 para recibirla.
+OneComponent.vue
+<template>
+<div class="bg-yellow-500 p-8">
+<p class="text-white text-2xl">
+Hola desde el componente 3
+</p>
+</div>
+</template>
+<style scoped>
+</style>
+<script setup lang="ts">
+import { provide, ref } from 'vue';
+import TwoComponent from './TwoComponent.vue';
+const nombre = ref('Luis');
+provide('nombre', nombre);
+</script>
+<template>
+<div class="bg-red-500 p-8">
+<p class="text-white text-2xl">
+Hola desde el componente 1
+</p>
+<TwoComponent />
+<input type="text" v-model="nombre" class="mt-4 p-2 rounded"/>
+</div>
+</template>
+En este componente:
+ThreeComponent.vue
+En este componente:
+El resultado, se muestra en la siguiente figura:
+<style scoped>
+</style>
+1. Hemos importado desde vue, provide y ref.
+2. Hemos creado una variable reactiva llamada nombre.
+3. Hemos usado provide para pasar la variable a otro componente. Provide usa dos
+argumentos: el nombre de la variable a pasar y su contenido.
+4. Hemos añadido una etiqueta input para comprobar lo que pasa si modificamos el valor de la
+variable reactiva nombre.
+<script setup lang="ts">
+import { inject } from 'vue';
+const nombre = inject('nombre');
+</script>
+<template>
+<div class="bg-yellow-500 p-8">
+<p class="text-white text-2xl">
+Hola desde el componente 3, {{ nombre }}
+</p>
+</div>
+<input type="text" v-model="nombre" class="mt-4 p-2 rounded"/>
+</template>
+<style scoped>
+</style>
+1. Hemos importado desde vue, inject.
+2. Hemos creado una variable llamada nombre inyectando la variable nombre.
+3. Hemos usado la variable nombre para mostrarla en el template.
+4. Hemos añadido una etiqueta input para comprobar lo que pasa si modificamos el valor de la
+variable reactiva nombre.
+
+04-Vue Router
+Vue router nos va a permitir mostrar uno u otro contenido a partir de la URL.
+4.1. Instalación
+4.1.1. En un proyecto Vue existente.
+Si tenemos un proyecto Vue ya iniciado y no hemos instalado el router, podemos instalarlo con
+la siguiente orden:
+4.1.2. En un nuevo proyecto.
+Si vamos a comenzar un nuevo proyecto en Vue.js y necesitamos el router hacemos lo
+siguiente:
+Nota
+Si es la primera vez que lo hacemos (recordad que en la primera sección hicimos la
+instalación con vite), nos aparecerá lo siguiente:
+Need to install the following packages:
+create-vue@3.18.3
+Ok to proceed? (y) y
+... y seguimos las instrucciones:
+npm install vue-router@4
+npm create vue@latest
+Vue.js - The Progressive JavaScript Framework
+│
+◆ Project name (target directory):
+│ vue-router█
+|
+◆ Select features to include in your project: (↑/↓ to navigate, space to
+select, a to toggle all, enter to confirm)
+│ ◼ TypeScript
+│ ◻ JSX Support
+│ ◼ Router (SPA development)
+│ ◻ Pinia (state management)
+│ ◻ Vitest (unit testing)
+│ ◻ End-to-End Testing
+│ ◻ ESLint (error prevention)
+Una vez terminamos, ya podemos abrir el proyecto desde nuestro editor favorito.
+│ ◻ Prettier (code formatting)
+|
+select, a to toggle all, enter to confirm)
+│ TypeScript, Router (SPA development)
+│
+◇ Select experimental features to include in your project: (↑/↓ to navigate,
+space to select, a to toggle all, enter to confirm)
+│ none
+│
+◇ Skip all example code and start with a blank Vue project?
+│ No
+Scaffolding project in /home/lvicente/Development/CursoVue/vue-router...
+│
+└ Done. Now run:
+cd vue-router
+npm install
+npm run dev
+Instalamos las dependencias y arrancamos el proyecto:
+Fijaos que ahora tenemos el enlace a las páginas "Home" y "About" y si seleccionamos cada
+una de ellas cambia la URL y solo se modifica la parte derecha.
+4.2. Funcionamiento de Vue Router
+Para ver el funcionamiento del router de Vue, vamos a abrir el componente App-vue:
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
+</script>
+<template>
+<header>
+<img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125"
+height="125" />
+<div class="wrapper">
+<HelloWorld msg="You did it!" />
+<nav>
+<RouterLink to="/">Home</RouterLink>
+<RouterLink to="/about">About</RouterLink>
+</nav>
+</div>
+</header>
+<RouterView />
+</template>
+<style scoped>
+header {
+line-height: 1.5;
+max-height: 100vh;
+}
+.logo {
+display: block;
+margin: 0 auto 2rem;
+}
+nav {
+width: 100%;
+font-size: 12px;
+text-align: center;
+margin-top: 2rem;
+}
+nav a.router-link-exact-active {
+color: var(--color-text);
+}
+nav a.router-link-exact-active:hover {
+background-color: transparent;
+}
+nav a {
+display: inline-block;
+padding: 0 1rem;
+border-left: 1px solid var(--color-border);
+}
+nav a:first-of-type {
+border: 0;
+}
+@media (min-width: 1024px) {
+header {
+display: flex;
+place-items: center;
+padding-right: calc(var(--section-gap) / 2);
+}
+.logo {
+margin: 0 2rem 0 0;
+}
+header .wrapper {
+display: flex;
+place-items: flex-start;
+flex-wrap: wrap;
+}
+nav {
+Como podemos ver, es un componente normal de Vue con las secciones de
+text-align: left;
+margin-left: -1rem;
+font-size: 1rem;
+padding: 1rem 0;
+margin-top: 1rem;
+}
+}
+</style>
+05-Pinia🍍
+5.1. ¿Qué es Pinia?
+Según wikipedia: Pinia es una biblioteca de tiendas y un marco de gestión de estado para
+Vue.js. Diseñado principalmente para crear aplicaciones web frontales, utiliza sintaxis declarativa
+y ofrece su propia API de administración de estados.
+Hasta ahora, cada vez que queríamos guardar una información, lo que hemos hecho es crear
+una variable dentro de nuestro componente y; si hemos necesitado que la información sea
+usada por otro componentes, hemos hecho la comunicación entre ellos (ya sea por eventos, v-
+model...).
+Va a haber ocasiones en las que vamos a querer almacenar cierta información que vamos a
+querer que sea compartida por muchos (o casi todos) los componentes, como por ejemplo
+guardar la información de un usuario (autenticación de usuario) y es ahí donde Pinia es muy útil.
+Antes para esto se usaba VuEx, que actualmente ha evolucionado a Pinia.
+5.2. Definición de una tienda
+Vamos a crear un nuevo proyecto vue llamado vue-pinia; seleccionaremos TypeScript y Pinia
+como las características a instalar:
+Luego lo abriremos con nuestro editor de código favorito, instalamos las dependencias (npm i) y
+arrancamos el proyecto (npm run dev).
+Vamos a ver las diferencias con proyectos anteriores que no tenían instalado Pinia. Para ello
+vamos a la carpeta src de nuestro proyecto y abrimos el fichero index.ts:
+La principal diferencia, como podemos observar, es que se ha instalado Pinia. Si tuviésemos
+un proyecto en el que no hubiésemos instalado Pinia y quisiéramos instalarlo, lo haríamos con la
+orden:
+npm create vue@latest
+import './assets/main.css'
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from './App.vue'
+const app = createApp(App)
+app.use(createPinia())
+app.mount('#app')
+Una vez instalado, tendríamos que importarlo en el archivo index.ts y utilizarlo.
+Además, dentro de la carpeta src, se ha creado otra carpeta llamada stores donde ha creado el
+fichero counter.ts con una tienda inicial de ejemplo:
+Vamos a explicar el fichero en lo concerniente a Pinia:
+Una vez que tenemos la tienda definida, tenemos que importarla en los componentes en los que
+necesitemos usarla. En este ejemplo, al tratarse la tienda de un contador, vamos a crear un
+componente llamado MyCounter.vue donde vamos a importar la tienda:
+npm install pinia
+import { ref, computed } from 'vue'
+import { defineStore } from 'pinia'
+export const useCounterStore = defineStore('counter', () => {
+const count = ref(0)
+const doubleCount = computed(() => count.value * 2)
+function increment() {
+count.value++
+}
+return { count, doubleCount, increment }
+})
+1. Importamos defineStore de pinia.
+2. Creamos una constante que va a contener la tienda y la anteponemos la palabra export para
+que pueda ser usada fuera del fichero; por convenio, el nombre de la constante comenzará
+con la palabra use a la que concatenaremos el nombre que queramos dar a la tienda y
+terminaremos con la palabra Store.
+Una vez tenemos la variable, la asignamos la función defineStore importada anteriormente y
+que tiene 2 parámetros:
+1. El primer parámetro es el identificador de la tienda (en este caso counter). Este
+identificador debe ser único si creamos más tiendas en nuestro proyecto.
+2. Como estamos trabajando con composition API, vamos a pasarle una función de flecha
+como parámetro y dentro de ella podemos definir constantes, propiedades computadas,
+funciones, etc.
+<script setup lang="ts">
+import { useCounterStore } from '@/stores/counter';
+const counterStore = useCounterStore();
+</script>
+<template>
+En este componente:
+Nota
+Las tiendas no van a ser simples espacios donde definamos o almacenemos variables, sino
+que van a tener mucha cantidad de lógica de nuestra aplicación (en ellas se debe controlar
+cómo se recupera. se almacena, se transforma, etc).
+Para usarla, tenemos que importar el componente MyCounter.vue, en el componente principal
+App.vue; mostramos el fragmento de código:
+En las tiendas usamos objetos. Cuando nosotros usamos objetos, no suele ser una buena idea
+que permitamos a los usuarios modificar directamente el valor de sus propiedades- Pinia nos
+permite encapsular las propiedades de los objetos para acceder a ellas mediante el uso de
+Getters y manipularlas a través de Actions
+5.3. Getters
+Como hemos comentado antes, el uso de getters nos permite encapsular las propiedades del
+objeto. Según la convención de Composition API, los getters se definen a través de
+propiedades computadas. Vamos a modificar la tienda para aplicar estos conceptos
+(counter.ts):
+<div>
+<button @click="counterStore.count--">-</button>
+<span>{{ counterStore.count }}</span>
+<button @click="counterStore.increment">+</button>
+</div>
+</template>
+<style scoped>
+</style>
+1. Hemos importado la tienda.
+2. Hemos inicializado la tienda.
+3. La hemos usado en el template.
+<script setup lang="ts">
+...
+import MyCounter from './components/MyCounter.vue';
+...
+</script>
+<template>
+...
+<MyCounter />
+</template>
+Los cambios que hemos realizado son los siguientes;
+Nota
+Las propiedades computadas son de sólo lectura, por lo que tratar de modificar su valor
+directamente no es posible.
+La línea del componente MyCounter.vue en la que modificábamos directamente la propiedad
+count (<button @click="counterStore.count--">-</button>), ahora no funcionará.
+5.4. Actions
+Los actions son funciones que nos van a permitir manipular las propiedades encapsuladas.
+En el fichero counter.ts tenemos definidas ya dos acciones:
+Vamos a modificar el fichero counter.ts, añadiendo una función que nos permita decrementar en
+1 el valor de _count. Luego modificaremos el componente MyCounter.vue para que todo quede
+funcionando (por simplicidad, en ambos casos mostraremos solo los cambios):
+counter.ts:
+import { ref, computed } from 'vue'
+import { defineStore } from 'pinia'
+export const useCounterStore = defineStore('counter', () => {
+const _count = ref(0)
+const count = computed(() => _count.value)
+const doubleCount = computed(() => _count.value * 2)
+function increment() {
+_count.value++
+}
+return { count, doubleCount, increment }
+})
+1. Hemos renombrado la propiedad count, por _count (poner el guión es una convención para
+"decir" que la propiedad es privada.
+2. Hemos evitado que se retorne la propiedad.
+3. Hemos creado una propiedad count como computada.
+1. dobleCount: Mediante una propiedad computada que ejecuta una función de flecha.
+2. la función increment(): incrementa el valor de nuestra propiedad encapsulada _count.
+...
+function decrement() {
+_count.value--
+}
+MyComponent.vue:
+...
+return { count, doubleCount, increment, decrement }
+...
+<button @click="counterStore.decrement">-</button>
+...
+06-Organización del proyecto
+A partir de este capítulo vamos a comenzar a crear un nuevo proyecto. Para ello, vamos a crear
+un nuevo proyecto de Vue.js. Las características serán:
+6.1. Estructura de carpetas modular
+Cuando comenzamos un proyecto, una de las cosas más importantes que debemos hacer
+primero es ver cómo lo vamos a organizar las carpetas del mismo. Vue.js te da total libertad
+acerca de cómo hacerlo, pero también te da una estructura inicial:
+Por ejemplo, si nosotros nos dirigimos a la carpeta src, vamos a ver que aquí hay algunas
+carpetas creadas.
+Uso de TypeScript.
+Uso de Vue Router
+Uso de Pinia
+Posteriormente, instalaremos sus dependencias y lo ejecutaremos.
+assets: donde se almacenan todos los assets de nuestro sistema, por ejemplo el CSS y en
+este caso el logotipo.
+components: donde se supone que se va a ir almacenando todos los componentes del
+sistema.
+router: donde se almacena un archivo index.ts con las rutas.
+stores: donde tenemos todo lo relativo a pinia.
+views: donde guardamos nuestras vistas.
+Esta estructura que tenemos aquí es válida, pero se va a utilizar sobre todo cuando estamos
+trabajando en un proyecto muy pequeño. ¿Por qué razón? Imaginemos que todas las vistas de
+nuestra aplicación se empiecen a almacenar en esta carpeta en la carpeta views y que tenemos,
+por ejemplo; 100 vistas. Encontrar una vista a modificar podría ser un infierno... lo mismo
+ocurriría para las carpetas components, stores, etc.
+A la hora de comenzar un proyecto, si queremos que sea escalable, podríamos pensar en
+organizarlo de otra manera. Cuando trabajamos con con frameworks JS como View.js, es muy
+popular organizar nuestro proyecto de manera modular.
+La estructura modular nos indica que carpetas como, como views, stores o components no
+debemos tenerlo en la raíz del proyecto, debemos eliminarlo. Vamos a hacer limpieza del
+proyecto para que quede de la siguiente manera:
+¿Qué hemos hecho?
+1. Hemos eliminado las carpetas components, stores y views y todo su contenido.
+2. En la carpeta assets:
+1. Hemos eliminado el logo de vue que no vamos a usar.
+2. Hemos limpiado de contenido el fichero main.css.
+3. En la carpeta router, hemos dejado el contenido del fichero index.ts de la siguiente manera:
+import { createRouter, createWebHistory } from 'vue-router'
+const router = createRouter({
+history: createWebHistory(import.meta.env.BASE_URL),
+routes: [
+],
+Una vez que hemos hecho "limpieza" de nuestro proyecto, vamos a crear la nueva estructura.
+Para ello vamos a pensar en los módulos principales que tendría nuestra aplicación: Por un
+lado, deberíamos tener una parte pública, además tendríamos la parte de autenticación a la
+aplicación y un módulo de administración.
+Ya tenemos clara la estructura, así que creamos dentro de la carpeta src otra carpeta llamada
+modules y dentro de ella vamos a construir nuestros módulos principales que los vamos a llamar
+public, auth y admin. Posteriormente, dentro de cada módulo, crearemos las carpetas
+})
+export default router
+4. Hemos modificado el contenido del fichero App.vue, para evitar errores al ejecutar el
+proyecto, dejándolo de la siguiente manera:
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+</script>
+<template>
+<h1>Welcome to Your Vue.js App</h1>
+<RouterView />
+</template>
+<style scoped>
+</style>
+components, stores y views:
+La idea de nosotros agruparlo en módulos es que solo un programador va a trabajar en un
+determinado módulo; por ejemplo, un programador trabaja en el módulo admin, otro
+programador trabaja en el módulo auth y otro programador trabaja en el módulo public y la idea
+es que al programador al cual nosotros le asignemos un determinado módulo no tenga que salir
+de esta carpeta.
+No obstante, tal y como nosotros lo tenemos en este momento, los programadores de todas
+maneras van a tener que salir de esta carpeta para definir sus rutas; lo cual no es correcto.
+6.2. Enrutamiento modular
+Para que cada programador pueda trabajar 100% en sus módulos, vamos a añadir a cada uno
+de ellos la carpeta router, y; dentro de ella, vamos a crear su correspondiente fichero index.ts
+para trabajar de forma modular con las rutas.
+Para cada fichero de rutas de cada módulo crearemos un array que contenga todas las rutas
+necesarias, y lo importaremos en el fichero principal de rutas. Mostramos cómo hacerlo:
+src/modules/admin/router/index.ts
+src/modules/auth/router/index.ts
+src/modules/public/router/index.ts
+Nota
+Lo siguiente que vamos a hacer es crear las vistas. Las vistas a crear serían:
+const routers = [
+{
+path: 'admin',
+name: 'admin',
+component: () => import('@/modules/admin/views/AdminView.vue')
+},
+]
+export default routers
+const routers = [
+{
+path: 'login',
+name: 'login',
+component: () => import('@/modules/auth/views/LoginView.vue')
+},
+{
+path: 'register',
+name: 'register',component: () =>
+import('@/modules/auth/views/RegisterView.vue')
+}
+]
+export default routers
+const routers = [
+{
+path: '',
+name: 'home',
+component: () => import('@/modules/public/views/HomeView.vue')
+},
+]
+export default routers
+1. Debemos hacerlo para cada módulo.
+2. la propiedad path no lleva el "/" porque cuando las importemos, serán rutas anidadas.
+3. Hemos cargado el componente de forma perezosa, pero todavía no lo hemos creado, por
+lo que no funcionaría. Lo haremos más adelante.
+AdminView
+Por último modificamos el archivo principal de rutas, importando los archivos de rutas de los
+módulos:
+src/router/index.ts
+6.3. Submodulos
+LoginView
+RegisterView
+HomeView
+Vamos a poner el código de una de ellas (HomeView). El resto de vistas sería igual, sólo que
+cambiando el testo dentro de la etiqueta "<h1></h1>"
+<script setup lang="ts">
+</script>
+<template>
+<div>
+<h1>Home View</h1>
+</div>
+</template>
+<style scoped>
+</style>
+import { createRouter, createWebHistory } from 'vue-router'
+import publicRouters from '@/modules/public/router'
+import adminRouters from '@/modules/admin/router'
+import authRouters from '@/modules/auth/router'
+const router = createRouter({
+history: createWebHistory(import.meta.env.BASE_URL),
+routes: [
+{
+path: '/',
+children: publicRouters,
+},
+{
+path: '/admin',
+children: adminRouters,
+},
+{
+path: '/auth',
+children: authRouters,
+}
+],
+})
+export default router
+Nosotros hasta el momento hemos logrado organizar nuestro proyecto de manera modular y
+hemos generado tres grandes módulos: un módulo llamado admin, un módulo llamado auth y un
+módulo llamado public.
+Ahora, si tu proyecto es muy grande, es probable que este módulo que, por ejemplo; el módulo
+public, quieras dividirlo en módulos más pequeños.
+Para lograr eso, lo que vamos a hacer es lo siguiente.
+Dentro de la carpeta public vamos a crear una nueva carpeta y esta carpeta vamos a darle de
+nombre submodules. Para este ejemplo vamos a crear los submódulos about, blog, contact y
+home.
+De igual manera, estos submódulos deberían ser independientes, tal y como eran los módulos
+más grandes; deberían tener sus propios componentes, sus propias vistas, sus propias tiendas y
+su propio archivo de rutas.
+Además tendríamos que modificar el fichero de rutas del modulo public para importar las rutas
+hijas:
+src/modules/public/routes/index.ts:
+Nota
+Hemos aplicado desectructuración para importar el contenido de los arrays de rutas hijas.
+import aboutRoutes from '@/modules/public/submodules/about/router'
+import blogRoutes from '@/modules/public/submodules/blog/router'
+import contactRoutes from '@/modules/public/submodules/contact/router'
+import homeRoutes from '@/modules/public/submodules/home/router'
+const routers = [
+...aboutRoutes,
+...blogRoutes,
+...contactRoutes,
+...homeRoutes,
+]
+export default routers
+La estructura del proyecto (carpeta src) quedaría:
