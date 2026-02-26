@@ -25,3 +25,7 @@ Proyecto de **Fin de Grado (2º DAW)**. Consiste en un monorepo que integra un b
 
 ## Arquitectura
 El proyecto destaca por su **modularidad**, facilitando la escalabilidad al separar las vistas y componentes por módulos de negocio, permitiendo un mantenimiento desacoplado entre el panel de administración y la vista de usuario.
+
+## Documentación adicional
+Para una explicación detallada de la arquitectura, el flujo de datos y decisiones de diseño, puedes consultar la documentación técnica en Notion: <br>
+[**Documentación del Proyecto (Notion)**](https://www.notion.so/TFG-Sistema-de-Gesti-n-de-Biblioteca-313c9851b50480d9afe3e509c71b8fca?source=copy_link)
