@@ -20,16 +20,6 @@ const model = ref<MenuItem[]>([
     label: 'Pages',
     items: [
       {
-        label: 'Login',
-        icon: 'pi pi-fw pi-user',
-        to: '/auth/login',
-      },
-      {
-        label: 'Error',
-        icon: 'pi pi-fw pi-exclamation-circle',
-        to: '/pages/error',
-      },
-      {
         label: 'Admin',
         icon: 'pi pi-fw pi-user',
         to: '/admin',
@@ -40,9 +30,19 @@ const model = ref<MenuItem[]>([
         to: '/user',
       },
       {
+        label: 'Login',
+        icon: 'pi pi-fw pi-user',
+        to: '/auth/login',
+      },
+      {
         label: '404',
         icon: 'pi pi-fw pi-question-circle',
         to: '/pages/not-found',
+      },
+      {
+        label: 'Error',
+        icon: 'pi pi-fw pi-exclamation-circle',
+        to: '/pages/error',
       },
     ],
   },
