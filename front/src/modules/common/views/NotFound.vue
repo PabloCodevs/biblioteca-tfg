@@ -23,10 +23,10 @@ import FloatingConfigurator from '@/modules/common/components/FloatingConfigurat
         >
           <span class="text-primary font-bold text-3xl">404</span>
           <h1 class="text-surface-900 dark:text-surface-0 font-bold text-3xl lg:text-5xl mb-2">
-            Not Found
+            No Encontrado
           </h1>
           <div class="text-surface-600 dark:text-surface-200 mb-8">
-            Requested resource is not available.
+            El recurso solicitado no está disponible.
           </div>
           <router-link
             to="/"
@@ -40,10 +40,10 @@ import FloatingConfigurator from '@/modules/common/components/FloatingConfigurat
             </span>
             <span class="ml-6 flex flex-col">
               <span class="text-surface-900 dark:text-surface-0 lg:text-xl font-medium mb-0 block"
-                >Frequently Asked Questions</span
+                >Preguntas Frecuentes</span
               >
               <span class="text-surface-600 dark:text-surface-200 lg:text-xl"
-                >Ultricies mi quis hendrerit dolor.</span
+                >Consulta si el enlace que buscas ha cambiado de ubicación o si el mantenimiento está afectando el acceso.</span
               >
             </span>
           </router-link>
@@ -59,10 +59,10 @@ import FloatingConfigurator from '@/modules/common/components/FloatingConfigurat
             </span>
             <span class="ml-6 flex flex-col">
               <span class="text-surface-900 dark:text-surface-0 lg:text-xl font-medium mb-0"
-                >Solution Center</span
+                >Centro de Soluciones</span
               >
               <span class="text-surface-600 dark:text-surface-200 lg:text-xl"
-                >Phasellus faucibus scelerisque eleifend.</span
+                >Reporta este enlace roto o busca guías paso a paso para navegar a la sección correcta del sitio.</span
               >
             </span>
           </router-link>
@@ -78,14 +78,14 @@ import FloatingConfigurator from '@/modules/common/components/FloatingConfigurat
             </span>
             <span class="ml-6 flex flex-col">
               <span class="text-surface-900 dark:text-surface-0 lg:text-xl font-medium mb-0"
-                >Permission Manager</span
+                >Gestor de Permisos</span
               >
               <span class="text-surface-600 dark:text-surface-200 lg:text-xl"
-                >Accumsan in nisl nisi scelerisque</span
+                >Verifica si necesitas una cuenta con privilegios especiales para visualizar el contenido de esta ruta.</span
               >
             </span>
           </router-link>
-          <Button as="router-link" label="Go to Dashboard" to="/" />
+          <Button as="router-link" label="Volver al inicio" to="/" />
         </div>
       </div>
     </div>
