@@ -69,7 +69,7 @@ const handleReturn = async (borrowId: number) => {
       >
         <template #empty>No hay libros disponibles en este momento.</template>
         <template #loading>Cargando libros disponibles...</template>
-        <Column field="id" header="ID" style="width: 6rem"></Column>
+        <!-- <Column field="id" header="ID" style="width: 6rem"></Column> -->
         <Column field="titulo" header="Título" style="width: 15rem"></Column>
         <Column field="autor" header="Autor" style="width: 12rem"></Column>
         <Column field="isbn" header="ISBN" style="width: 10rem"></Column>

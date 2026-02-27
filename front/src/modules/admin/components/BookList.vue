@@ -59,7 +59,7 @@ const getEstadoSeverity = (estado: string) => {
           <p>No se encontraron libros. Verifica que la API está conectada.</p>
         </div>
       </template>
-      <Column selectionMode="multiple" :exportable="false" headerStyle="width: 3rem"></Column>
+      <!-- <Column selectionMode="multiple" :exportable="false" headerStyle="width: 3rem"></Column> -->
       <Column field="id" header="ID" sortable style="min-width: 4rem"></Column>
       <Column field="titulo" header="Título" sortable style="min-width: 12rem"></Column>
       <Column field="autor" header="Autor" sortable style="min-width: 10rem"></Column>
